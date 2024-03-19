@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon -e js, ejs, json app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -4,12 +4,8 @@ const { join } = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const { connectToDatabase } = require('./util/mongodb-util.js');
-
-connectToDatabase('mongodb://localhost:27107');
-
-const indexRouter = require('./routes/index.js');
-const usersRouter = require('./routes/users.js');
+const homeRouter = require('./routes/home.js');
+const loginRouter = require('./routes/login.js');
 
 const app = express();
 
@@ -24,8 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/home', homeRouter);
+app.use('/login', loginRouter);
+
+// app.get('/logout', (req, res, next) => {
+
+// })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

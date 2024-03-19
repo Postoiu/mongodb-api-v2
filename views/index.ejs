@@ -7,5 +7,13 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <ul>
+      <% databases.map(db => { %>
+        <li>
+          <a href="<%= db.name %>"><%= db.name %></a>
+        </li>
+      <% }) %>
+    </ul>
   </body>
 </html>
