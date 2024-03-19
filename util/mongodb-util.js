@@ -8,11 +8,12 @@ async function connectToDatabase(uri) {
         await mongoClient.connect();
         console.log('Connected to MongoDB!');
     } catch(err) {
-        console.error('Connection to MongoDB failed!', err);
+        console.error('Connection to MongoDB failed!');
+        throw err;
     }
 }
 
-async function getDb(dbName) {
+function getDb(dbName) {
     return mongoClient.db(dbName);
 }
 
