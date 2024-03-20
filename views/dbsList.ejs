@@ -1,0 +1,12 @@
+<%- include('includes/header.ejs') %>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+
+  <ul>
+    <% documents.map(document => { %>
+      <li>
+        <a href="/home/<%= document.name %>"><%= document.name %></a>
+      </li>
+    <% }) %>
+  </ul>
+<%- include('includes/footer') %>

@@ -1,0 +1,16 @@
+services:
+  mongodb-server:
+    image: mongo
+    restart: always
+    ports:
+      - 27107:27107
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  mongo-api-app:
+    build: .
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
