@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-<body>
-    <form action="/login/auth" method="POST">
-        <label for="username">User</label>
-        <input type="text" name="username" id="username">
-        <hr>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <hr>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+<%- include('./includes/header.ejs', { isLogin: true }) %>
+    <div class="container col-3 mx-auto bg-light mt-4 rounded shadow">
+        <form class="p-3" action="/login/auth" method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>
+<%- include('./includes/footer.ejs') %>

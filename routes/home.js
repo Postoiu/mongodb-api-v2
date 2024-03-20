@@ -12,11 +12,18 @@ router.get('/', function(req, res, next) {
 
   db.admin().listDatabases()
   .then((databases) => {
-    res.render('index', {
-      title: 'Express',
-      databases: databases.databases
-    });
+    res.status(200);
+    res.render('dashboard', { documents: databases.databases });
   });
 });
+
+router.get('/:database', (req, res, next) => {
+  const db = getDb(req.params.database);
+
+  db.listCollections().toArray().then(collections => {
+    res.status(200);
+    res.render('dashboard', { documents: collections });
+  });
+})
 
 module.exports = router;

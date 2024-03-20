@@ -13,6 +13,10 @@ async function connectToDatabase(uri) {
     }
 }
 
+function closeConnection() {
+    mongoClient.close();
+}
+
 function getDb(dbName) {
     return mongoClient.db(dbName);
 }
@@ -30,6 +34,7 @@ async function findDocuments() {}
 
 module.exports = {
     connectToDatabase,
+    closeConnection,
     getDb,
     insertToDatabase,
     findDocuments

@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const homeRouter = require('./routes/home.js');
 const loginRouter = require('./routes/login.js');
+const { closeConnection } = require('./util/mongodb-util.js');
 
 const app = express();
 
@@ -23,9 +24,16 @@ app.use(express.static(join(__dirname, 'public')));
 app.use('/home', homeRouter);
 app.use('/login', loginRouter);
 
-// app.get('/logout', (req, res, next) => {
+app.get('/', (req, res, next) => {
+  res.redirect('/home');
+})
 
-// })
+app.get('/logout', (req, res, next) => {
+  res.clearCookie('accessToken');
+  res.clearCookie('user');
+  closeConnection();
+  res.redirect('/login');
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

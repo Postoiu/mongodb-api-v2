@@ -6,14 +6,15 @@ const { connectToDatabase, getDb } = require('../util/mongodb-util');
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.render('login');
+    res.status(200);
+    res.render('login');
 });
 
 router.post('/auth', (req, res, next) => {
 
     const username = encodeURIComponent(req.body.username);
     const password = encodeURIComponent(req.body.password);
-    const connectionString = `mongodb://${username}:${password}@localhost:27107/?authSource=admin`;
+    const connectionString = `mongodb://${username}:${password}@mongodb-server/?authSource=admin`;
 
     console.log('Authenticating user...');
 
@@ -21,19 +22,18 @@ router.post('/auth', (req, res, next) => {
     .then(async () => {
         console.log('User authenticated successfuly!');
 
-        const db = getDb('admin');
-        const { users } = await db.command({
-            usersInfo: req.body.username
-        });
+        const token = jwt.sign({ id: req.body.password }, 'secret', { expiresIn: 86400 });
 
-        const token = jwt.sign({ id: users[0]._id }, 'secret', { expiresIn: 84600 });
         res.cookie('accessToken', token);
+        res.cookie('user', username, { maxAge: 86400000 });
+        res.status(200);
 
-        return res.status(200).redirect('/home');
+        return res.redirect('/home');
     })
     .catch(err => {
         console.error('Authentication failed!\n', err);
-        res.status(401).send('User credentials don\'t match!');
+        res.status(401);
+        res.send('User credentials don\'t match!');
 
     })
 })
