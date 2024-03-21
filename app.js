@@ -3,6 +3,7 @@ const express = require('express');
 const { join } = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const errorhandler = require('errorhandler');
 
 const homeRouter = require('./routes/home.js');
 const loginRouter = require('./routes/login.js');
@@ -21,12 +22,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, 'public')));
 
-app.use('/home', homeRouter);
-app.use('/login', loginRouter);
-
 app.get('/', (req, res, next) => {
   res.redirect('/home');
 })
+
+app.use('/home', homeRouter);
+app.use('/login', loginRouter);
+
 
 app.get('/logout', (req, res, next) => {
   res.clearCookie('accessToken');
@@ -35,6 +37,12 @@ app.get('/logout', (req, res, next) => {
   res.redirect('/login');
 })
 
+// app.use(errorhandler({log: renderError}));
+
+// function renderError(err, str, req, res) {
+//   res.render('error', {message: str, error: err});
+// }
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -42,6 +50,9 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+  if(res.headersSent) {
+    return next(err);
+  }
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

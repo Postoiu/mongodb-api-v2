@@ -1,3 +1,8 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<%- include('./includes/header.ejs', { isLogin: false }) %>
+    <h1><%= message %></h1>
+
+    <div class="container bg-light">
+        <h2><%= error.status %></h2>
+        <pre><%= error.stack %></pre>
+    </div>
+<%- include('./includes/footer.ejs') %>

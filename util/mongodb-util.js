@@ -17,6 +17,10 @@ function closeConnection() {
     mongoClient.close();
 }
 
+function getClient() {
+    return mongoClient;
+}
+
 function getDb(dbName) {
     return mongoClient.db(dbName);
 }
@@ -35,6 +39,7 @@ async function findDocuments() {}
 module.exports = {
     connectToDatabase,
     closeConnection,
+    getClient,
     getDb,
     insertToDatabase,
     findDocuments
