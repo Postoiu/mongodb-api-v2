@@ -1,12 +1,36 @@
 <%- include('./includes/header.ejs', { isLogin: false }) %>
     <h1>Dashboard</h1>
     <div class="container bg-light">
-        <ul>
-            <% documents.forEach(document => { %>
-                <li>
-                    <a href="/home/<%= document.name %>"><%= document.name %></a>
-                </li>
-            <%})%>
-        </ul>
+        <table class="table table-striped table-hover">
+            <thead>
+                <th scope="col">Database name</th>
+                <th scope="col">Size on disk</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <% databases.forEach(db => { %>
+                    <tr>
+                        <td>
+                            <a href="/home/<%= db.name %>"><%= db.name %></a>
+                        </td>
+                        <td><%= db.sizeOnDisk %> Kb</td>
+                        <td>
+                            <a href="/home/delete-database?dbName=<%= db.name %>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container bg-light p-3">
+        <h3>Add database</h3>
+        <form action="/home/create-database" method="POST">
+            <label for="dbName">Database name</label>
+            <input type="text" name="dbName" id="dbName">
+            <label for="collections">Collections (separated by comma(","))</label>
+            <input type="text" name="collections" id="collections">
+            <button class="btn btn-success">Create database</button>
+        </form>
     </div>
 <%- include('./includes/footer.ejs') %>

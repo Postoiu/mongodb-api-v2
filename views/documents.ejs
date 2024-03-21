@@ -1,0 +1,8 @@
+<%- include('./includes/header.ejs', { isLogin: false }) %>
+    <h1> <%= collection %> </h1>
+    <div class="container bg-light">
+        <% documents.forEach(document => { %>
+            <pre><%=JSON.stringify(document, undefined, 2).trim()%></pre>
+        <%})%>
+    </div>
+<%- include('./includes/footer.ejs') %>

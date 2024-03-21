@@ -1,0 +1,33 @@
+<%- include('./includes/header.ejs', { isLogin: false }) %>
+    <h1> <%= database %> </h1>
+    <div class="container bg-light">
+        <table class="table table-striped table-hover">
+            <thead>
+                <th scope="col">Collection name</th>
+                <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+                <% collections.forEach(collection => { %>
+                    <tr>
+                        <td>
+                            <a href="/home/<%= database %>/<%= collection.name %>"><%= collection.name %></a>
+                        </td>
+                        <td>
+                            <a href="/home/delete-collection?db=<%= database %>&name=<%= collection.name %>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container bg-light p-3">
+        <h3>Add collection</h3>
+        <form action="/home/create-collection" method="POST">
+            <label for="collectionName">Collection name</label>
+            <input type="text" name="collectionName" id="collectionName">
+            <input type="hidden" name="dbName" value="<%= database %>">
+            <button class="btn btn-success">Create collection</button>
+        </form>
+    </div>
+<%- include('./includes/footer.ejs') %>
