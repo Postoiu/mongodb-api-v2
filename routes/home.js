@@ -63,7 +63,7 @@ router.post('/create-collection', async (req, res, next) => {
 })
 
 router.get('/delete-collection', async (req, res, next) => {
-  const dbName = req.query.database;
+  const dbName = req.query.db;
   const db = getDb(dbName);
   const collectionName = req.query.name;
 
